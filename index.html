@@ -10,7 +10,32 @@
 </head>
 
 <body>
-	<h2>Test</h2>
+	<div class="app">
+		<h1 class="app__title">Test App</h1>
+		
+		<form class="app__form form">
+			<label for="form__input">
+				<p>Enter pair in format "name=value"</p>
+				<p>Input can contain only <span>alpha-numeric latin</span> characters with one equal-sign divider</p>
+				<input id="form__input" type="text" name="pairInput" placeholder="enter your pair">
+				<p class="form__input-message">Please enter value of pair</p>
+			</label>
+			<button class="button form__button">Add to list</button>
+		</form>
+		
+		<div class="app__output">
+			<div class="app__list-wrapper">
+				<h2 class="app__list-title">Pair List</h2>
+				<ul class="app__list"></ul>
+			</div>
+			
+			<div class="app__buttons-wrapper">
+				<button class="button button--sort-by-name">Sort by Name</button>
+				<button class="button button--sort-by-value">Sort by Value</button>
+				<button class="button button--delete-all">Delete All</button>
+			</div>
+		</div>
+	</div>
 
 	<script src="./index.js"></script>
 </body>

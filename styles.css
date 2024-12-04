@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+body {
+    background-color: #008f8f;
+}
+.app {
+    margin: 15vh auto 0;
+    width: 700px;
+    padding: 50px;
+    background-color: #b5efef;
+    border-radius: 30px 10px 30px 10px;
+}
+.app__title {
+    margin-bottom: 50px;
+    color: #003838;
+}
+
+/*----------------- Input form styles -------------------*/
+.form {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 50px;
+}
+.form p {
+    color: #003838;
+    width: 400px;
+}
+.form p span {
+    font-weight: bold;
+}
+#form__input {
+    display: block;
+    width: 400px;
+    height: 40px;
+    margin-top: 10px;
+    padding: 5px 20px;
+    border: 2px solid teal;
+    border-radius: 8px;
+
+}
+.form .form__input-message {
+    position: absolute;
+    margin-top: 5px;
+    color: firebrick;
+    font-style: italic;
+    display: none;
+}
+.button {
+    height: 40px;
+    background-color: #1db9b9;
+    color: white;
+    font-size: 16px;
+    padding: 5px 20px;
+    border: 2px solid teal;
+    border-radius: 8px;
+}
+
+/*----------------- Output list styles -------------------*/
+.app__output {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.app__list {
+    width: 400px;
+    min-height: 300px;
+    list-style-type: none;
+    border: 2px solid teal;
+}
+.app__buttons-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 40px;
+}
