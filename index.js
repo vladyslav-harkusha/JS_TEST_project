@@ -7,7 +7,7 @@ const btnSortByValue = document.querySelector('.button--sort-by-value');
 const btnDeleteAll = document.querySelector('.button--delete-all');
 
 
-// Робимо контрольований інпут у формі, щоб користувач не зміг ввести недопустимі символи чи дані у невірному форматі
+// Робимо контрольований інпут у формі, щоб користувач не зміг ввести недопустимі символи, або дані у невірному форматі
 let controlledInputValue = '';
 
 formInput.addEventListener('input', (event) => {
@@ -34,16 +34,34 @@ formInput.addEventListener('input', (event) => {
 
 
 // Функція для виводу елементів масиву
+let pairsArray = [];
+
 const createPairItems = (arr) => arr.forEach(elem => {
 	const pairItem = document.createElement('li');
-	pairItem.innerText = elem;
 	outputList.appendChild(pairItem);
+	pairItem.classList.add('app__list-item');
+
+	const pairText = document.createElement('p');
+	pairText.innerText = elem;
+	pairText.classList.add('app__list-item_text');
+
+	const deleteItemBtn = document.createElement('button');
+	deleteItemBtn.innerText = 'Delete item';
+	deleteItemBtn.classList.add('button', 'btnDeleteItem');
+
+	// Функція для видалення елемента зі списку
+	deleteItemBtn.addEventListener('click', () => {
+		const foundIndex = pairsArray.findIndex(pair => pair === elem);
+		pairsArray.splice(foundIndex, 1);
+		outputList.innerText = '';
+		createPairItems(pairsArray);
+	});
+
+	pairItem.append(pairText, deleteItemBtn);
 });
 
 
 //Івент сабміту форми і додавання значень інпуту в масив
-let pairsArray = [];
-
 appForm.addEventListener('submit', (event) => {
 	event.preventDefault();
 
@@ -76,45 +94,45 @@ const sortPairs = (pairsArr, sortBy) => {
 
 
 // Вішаємо події на кнопки сортування так, щоб вони працювали й у зворотному напрямку
-let sortByNameToggle = false;
-let sortByValueToggle = false;
+let isSortedByName = false;
+let isSortedByValue = false;
 
 btnSortByName.addEventListener('click', () => {
 	if (pairsArray.length > 1) {
-		if (sortByValueToggle) {
-			sortByValueToggle = !sortByValueToggle;
+		if (isSortedByValue) {
+			isSortedByValue = !isSortedByValue;
 			btnSortByValue.innerText = 'Sort by Value';
 		}
 
-		if (!sortByNameToggle) {
+		if (!isSortedByName) {
 			sortPairs(pairsArray, 'name');
 			btnSortByName.innerText = 'Sorted by Name';
-			sortByNameToggle = !sortByNameToggle;
+			isSortedByName = !isSortedByName;
 		} else {
 			outputList.innerText = '';
 			createPairItems(pairsArray);
 			btnSortByName.innerText = 'Sort by Name';
-			sortByNameToggle = !sortByNameToggle;
+			isSortedByName = !isSortedByName;
 		}
 	}
 });
 
 btnSortByValue.addEventListener('click', () => {
 	if (pairsArray.length > 1) {
-		if (sortByNameToggle) {
-			sortByNameToggle = !sortByNameToggle;
+		if (isSortedByName) {
+			isSortedByName = !isSortedByName;
 			btnSortByName.innerText = 'Sort by Name';
 		}
 
-		if (!sortByValueToggle) {
+		if (!isSortedByValue) {
 			sortPairs(pairsArray, 'value');
 			btnSortByValue.innerText = 'Sorted by Value';
-			sortByValueToggle = !sortByValueToggle;
+			isSortedByValue = !isSortedByValue;
 		} else {
 			outputList.innerText = '';
 			createPairItems(pairsArray);
 			btnSortByValue.innerText = 'Sort by Value';
-			sortByValueToggle = !sortByValueToggle;
+			isSortedByValue = !isSortedByValue;
 		}
 	}
 });
@@ -125,8 +143,15 @@ btnDeleteAll.addEventListener('click', () => {
 	if (pairsArray.length) {
 		outputList.innerText = '';
 		pairsArray = [];
-		btnSortByName.innerText = 'Sort by Name';
-		btnSortByValue.innerText = 'Sort by Value';
+
+		if (isSortedByName) {
+			btnSortByName.innerText = 'Sort by Name';
+			isSortedByName = false;
+		}
+		if (isSortedByValue) {
+			btnSortByValue.innerText = 'Sort by Value';
+			isSortedByValue = false;
+		}
 	}
 });
 
