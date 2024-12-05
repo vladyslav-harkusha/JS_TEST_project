@@ -8,15 +8,18 @@ body {
     background-color: #008f8f;
 }
 .app {
-    margin: 15vh auto 0;
-    width: 700px;
+    margin: 10vh auto 0;
+    width: 900px;
     padding: 50px;
     background-color: #b5efef;
-    border-radius: 30px 10px 30px 10px;
+    border-radius: 50px 10px 50px 10px;
+    box-shadow: 10px 10px 20px 0 #232323;
 }
 .app__title {
     margin-bottom: 50px;
     color: #003838;
+    font-size: 40px;
+    text-shadow: 3px 2px 2px rgba(6,139,46,0.6);
 }
 
 /*----------------- Input form styles -------------------*/
@@ -24,24 +27,39 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 .form p {
     color: #003838;
-    width: 400px;
+    opacity: 0.6;
+    font-size: 14px;
+    width: 550px;
 }
 .form p span {
     font-weight: bold;
 }
 #form__input {
     display: block;
-    width: 400px;
+    width: 550px;
     height: 40px;
     margin-top: 10px;
     padding: 5px 20px;
     border: 2px solid teal;
     border-radius: 8px;
-
+    font-size: 18px;
+    color: #003838;
+}
+#form__input::placeholder {
+    opacity: 0.6;
+    font-size: 18px;
+}
+#form__input:focus {
+    outline: none;
+    box-shadow: 0 0 5px 0 green;
+    border: 1px solid teal;
+}
+#form__input:focus::placeholder {
+    opacity: 0;
 }
 .form .form__input-message {
     position: absolute;
@@ -49,15 +67,6 @@ body {
     color: firebrick;
     font-style: italic;
     display: none;
-}
-.button {
-    height: 40px;
-    background-color: #1db9b9;
-    color: white;
-    font-size: 16px;
-    padding: 5px 20px;
-    border: 2px solid teal;
-    border-radius: 8px;
 }
 
 /*----------------- Output list styles -------------------*/
@@ -67,24 +76,93 @@ body {
     align-items: flex-start;
 }
 .app__list {
-    width: 400px;
-    min-height: 300px;
+    width: 550px;
+    min-height: 250px;
     list-style-type: none;
     border: 2px solid teal;
+    padding: 15px 15px 5px 15px;
+    background-color: #d7fffa;
+    box-shadow: inset 2px 2px 4px 0 rgba(0, 128, 128, 0.59);
+    border-radius: 10px;
+}
+.app__list-title {
+    color: #003838;
+    text-transform: uppercase;
+    margin-top: 15px;
+    margin-bottom: 5px;
 }
 .app__list-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px;
-    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #c4efe9;
+    padding-left: 10px;
+    border-radius: 10px;
 }
 .app__list-item_text {
-    font-size: 24px;
+    font-size: 20px;
+    max-width: 400px;
+    overflow-x: auto;
 }
 .app__buttons-wrapper {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-top: 40px;
+    margin-top: 50px;
+}
+
+/*----------------- Buttons styles -------------------*/
+button {
+    height: 40px;
+    width: 180px;
+    padding: 5px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #003838;
+    background-color: rgba(0, 128, 0, 0.2);
+    border: 2px solid teal;
+    border-radius: 8px;
+    box-shadow: 2px 2px 3px 0 rgba(0, 128, 128, 0.6);
+    transition: 0.3s;
+    cursor: pointer;
+}
+button:hover {
+    background-color: rgba(0, 128, 0, 0.3);
+}
+.button--sort-by-name,
+.button--sort-by-value {
+    background-color: rgba(255, 255, 0, 0.2);
+}
+.button--sort-by-name:hover,
+.button--sort-by-value:hover {
+    background-color: rgba(255, 255, 0, 0.45);
+}
+.sorted {
+    background-color: rgba(255, 255, 0, 0.9);
+    box-shadow: inset 2px 2px 2px 0 rgba(0, 128, 128, 0.6);
+}
+.sorted:hover {
+    background-color: rgba(255, 255, 0, 0.8);
+}
+.button--delete-all {
+    margin-top: 25px;
+    background-color: rgba(255, 0, 0, 0.2);
+}
+.button--delete-all:hover {
+    background-color: rgba(255, 0, 0, 0.4);
+}
+.button--delete-all:focus {
+    background-color: rgba(255, 0, 0, 0.7);
+    box-shadow: inset 2px 2px 4px 0 rgba(0, 128, 128, 0.6);
+}
+.button--delete-item {
+    width: 80px;
+    font-size: 13px;
+    padding: 2px 5px;
+    background-color: rgba(255, 165, 0, 0.2);
+}
+.button--delete-item:hover {
+    background-color: rgba(255, 165, 0, 0.5);
 }

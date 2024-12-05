@@ -46,8 +46,8 @@ const createPairItems = (arr) => arr.forEach(elem => {
 	pairText.classList.add('app__list-item_text');
 
 	const deleteItemBtn = document.createElement('button');
-	deleteItemBtn.innerText = 'Delete item';
-	deleteItemBtn.classList.add('button', 'btnDeleteItem');
+	deleteItemBtn.innerText = 'Delete';
+	deleteItemBtn.classList.add('button--delete-item');
 
 	// Функція для видалення елемента зі списку
 	deleteItemBtn.addEventListener('click', () => {
@@ -102,16 +102,19 @@ btnSortByName.addEventListener('click', () => {
 		if (isSortedByValue) {
 			isSortedByValue = !isSortedByValue;
 			btnSortByValue.innerText = 'Sort by Value';
+			btnSortByValue.classList.remove('sorted');
 		}
 
 		if (!isSortedByName) {
 			sortPairs(pairsArray, 'name');
 			btnSortByName.innerText = 'Sorted by Name';
+			btnSortByName.classList.add('sorted');
 			isSortedByName = !isSortedByName;
 		} else {
 			outputList.innerText = '';
 			createPairItems(pairsArray);
 			btnSortByName.innerText = 'Sort by Name';
+			btnSortByName.classList.remove('sorted');
 			isSortedByName = !isSortedByName;
 		}
 	}
@@ -122,16 +125,19 @@ btnSortByValue.addEventListener('click', () => {
 		if (isSortedByName) {
 			isSortedByName = !isSortedByName;
 			btnSortByName.innerText = 'Sort by Name';
+			btnSortByName.classList.remove('sorted');
 		}
 
 		if (!isSortedByValue) {
 			sortPairs(pairsArray, 'value');
 			btnSortByValue.innerText = 'Sorted by Value';
+			btnSortByValue.classList.add('sorted');
 			isSortedByValue = !isSortedByValue;
 		} else {
 			outputList.innerText = '';
 			createPairItems(pairsArray);
 			btnSortByValue.innerText = 'Sort by Value';
+			btnSortByValue.classList.remove('sorted');
 			isSortedByValue = !isSortedByValue;
 		}
 	}
