@@ -1,0 +1,27 @@
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .app {
+        width: 700px;
+        margin: 3vh auto 0;
+    }
+    .form {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+    .app__output {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .app__list {
+        height: 220px;
+    }
+    .app__buttons-wrapper {
+        flex-direction: row;
+    }
+    .button--delete-all {
+        margin-top: 0;
+    }
+    button {
+        height: 30px;
+    }
+}

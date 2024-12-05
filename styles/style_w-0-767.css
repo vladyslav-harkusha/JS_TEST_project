@@ -1,0 +1,53 @@
+@media screen and (max-width: 767px) {
+    .app {
+        width: 360px;
+        margin-top: 10px;
+        padding: 20px;
+    }
+    .app__title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 30px;
+    }
+    .form {
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+        text-align: center;
+        position: relative;
+    }
+    .form p {
+        display: inline;
+    }
+    #form__input {
+        width: 330px;
+    }
+    .form .form__input-message {
+        top: 100px;
+        right: -20px;
+    }
+    .app__output {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .app__list-title {
+        text-align: center;
+    }
+    .app__list {
+        width: 330px;
+        min-height: 50px;
+        height: 160px;
+        margin-bottom: 10px;
+        overflow-y: scroll;
+    }
+    .app__buttons-wrapper {
+        flex-direction: column;
+        margin-top: 20px;
+    }
+    .button--delete-all {
+        margin-top: 0;
+    }
+    button {
+        height: 30px;
+    }
+}

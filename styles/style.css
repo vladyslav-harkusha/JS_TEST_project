@@ -8,7 +8,7 @@ body {
     background-color: #008f8f;
 }
 .app {
-    margin: 10vh auto 0;
+    margin: 8vh auto 0;
     width: 900px;
     padding: 50px;
     background-color: #b5efef;
@@ -75,21 +75,22 @@ body {
     justify-content: space-between;
     align-items: flex-start;
 }
+.app__list-title {
+    color: #003838;
+    text-transform: uppercase;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
 .app__list {
     width: 550px;
-    min-height: 250px;
+    height: 300px;
     list-style-type: none;
     border: 2px solid teal;
     padding: 15px 15px 5px 15px;
     background-color: #d7fffa;
     box-shadow: inset 2px 2px 4px 0 rgba(0, 128, 128, 0.59);
     border-radius: 10px;
-}
-.app__list-title {
-    color: #003838;
-    text-transform: uppercase;
-    margin-top: 15px;
-    margin-bottom: 5px;
+    overflow-y: auto;
 }
 .app__list-item {
     display: flex;
