@@ -152,13 +152,13 @@ btnDeleteAll.addEventListener('click', () => {
 
 		if (isSortedByName) {
 			btnSortByName.innerText = 'Sort by Name';
+			btnSortByName.classList.remove('sorted');
 			isSortedByName = false;
 		}
 		if (isSortedByValue) {
 			btnSortByValue.innerText = 'Sort by Value';
+			btnSortByValue.classList.remove('sorted');
 			isSortedByValue = false;
 		}
 	}
 });
-
-
