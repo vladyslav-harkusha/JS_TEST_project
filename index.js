@@ -6,6 +6,10 @@ const btnSortByName = document.querySelector('.button--sort-by-name');
 const btnSortByValue = document.querySelector('.button--sort-by-value');
 const btnDeleteAll = document.querySelector('.button--delete-all');
 
+// Змінні для перемикання кнопок стану сортування
+let isSortedByName = false;
+let isSortedByValue = false;
+
 
 // Робимо контрольований інпут у формі, щоб користувач не зміг ввести недопустимі символи, або дані у невірному форматі
 let controlledInputValue = '';
@@ -51,10 +55,23 @@ const createPairItems = (arr) => arr.forEach(elem => {
 	deleteItemBtn.classList.add('button--delete-item');
 
 	deleteItemBtn.addEventListener('click', () => {
+		// знаходимо індекс видаляємого елемента
 		const foundIndex = pairsArray.findIndex(pair => pair === elem);
+		// видаляємо елемент з масиву по знайденому індексу
 		pairsArray.splice(foundIndex, 1);
 		outputList.innerText = '';
-		createPairItems(pairsArray);
+
+		// якщо після видалення елемента масив не порожній - виводимо список
+		if (pairsArray.length) {
+			createPairItems(pairsArray);
+		}
+		// повертаємо кнопки сортування в початкове значення, якщо вони були активні
+		if (isSortedByName) {
+			changeSortButton(btnSortByName);
+		}
+		if (isSortedByValue) {
+			changeSortButton(btnSortByValue);
+		}
 	});
 
 	pairItem.append(pairText, deleteItemBtn);
@@ -71,6 +88,14 @@ appForm.addEventListener('submit', (event) => {
 		pairsArray.push(formInput.value);
 		createPairItems(pairsArray);
 
+		// якщо кнопки сортування активні - виводимо новий відсортований масив
+		if (isSortedByName) {
+			sortPairs(pairsArray,'name');
+		}
+		if (isSortedByValue) {
+			sortPairs(pairsArray,'value');
+		}
+
 		formInput.value = '';
 		controlledInputValue = '';
 	} else {
@@ -80,9 +105,8 @@ appForm.addEventListener('submit', (event) => {
 
 
 // Функція для сортування по Name або Value
-const sortPairs = (pairsArr, sortBy) => {
+function sortPairs(pairsArr, sortBy) {
 	let sortedPairs;
-
 	// копіюємо поточний масив, щоб його не змінювати. сортуємо сплітнуті елементи масиву залежно від умови
 	if (sortBy === 'name') {
 		sortedPairs = [...pairsArr].sort((pair1, pair2) => pair1.split('=')[0].localeCompare(pair2.split('=')[0]));
@@ -97,30 +121,47 @@ const sortPairs = (pairsArr, sortBy) => {
 }
 
 
-// Вішаємо події на кнопки сортування так, щоб вони при другому кліку повертали невідсортований масив
-let isSortedByName = false;
-let isSortedByValue = false;
+// Функція для перемикання стилів кнопок сортування
+function changeSortButton(sortButton) {
+	if (sortButton === btnSortByName) {
+		if (isSortedByName) {
+			btnSortByName.innerText = 'Sort by Name';
+			btnSortByName.classList.remove('sorted');
+		} else {
+			btnSortByName.innerText = 'Sorted by Name';
+			btnSortByName.classList.add('sorted');
+		}
+		isSortedByName = !isSortedByName;
+	}
 
+	if (sortButton === btnSortByValue) {
+		if (isSortedByValue) {
+			btnSortByValue.innerText = 'Sort by Value';
+			btnSortByValue.classList.remove('sorted');
+		} else {
+			btnSortByValue.innerText = 'Sorted by Value';
+			btnSortByValue.classList.add('sorted');
+		}
+		isSortedByValue = !isSortedByValue;
+	}
+}
+
+
+// Вішаємо події на кнопки сортування так, щоб вони при другому кліку повертали невідсортований масив
 btnSortByName.addEventListener('click', () => {
 	// сортуємо лише якщо є мінімум 2 елементи списку
 	if (pairsArray.length > 1) {
 		if (isSortedByValue) {
-			isSortedByValue = !isSortedByValue;
-			btnSortByValue.innerText = 'Sort by Value';
-			btnSortByValue.classList.remove('sorted');
+			changeSortButton(btnSortByValue);
 		}
 
 		if (!isSortedByName) {
 			sortPairs(pairsArray, 'name');
-			btnSortByName.innerText = 'Sorted by Name';
-			btnSortByName.classList.add('sorted');
-			isSortedByName = !isSortedByName;
+			changeSortButton(btnSortByName);
 		} else {
 			outputList.innerText = '';
 			createPairItems(pairsArray);
-			btnSortByName.innerText = 'Sort by Name';
-			btnSortByName.classList.remove('sorted');
-			isSortedByName = !isSortedByName;
+			changeSortButton(btnSortByName);
 		}
 	}
 });
@@ -128,22 +169,16 @@ btnSortByName.addEventListener('click', () => {
 btnSortByValue.addEventListener('click', () => {
 	if (pairsArray.length > 1) {
 		if (isSortedByName) {
-			isSortedByName = !isSortedByName;
-			btnSortByName.innerText = 'Sort by Name';
-			btnSortByName.classList.remove('sorted');
+			changeSortButton(btnSortByName);
 		}
 
 		if (!isSortedByValue) {
 			sortPairs(pairsArray, 'value');
-			btnSortByValue.innerText = 'Sorted by Value';
-			btnSortByValue.classList.add('sorted');
-			isSortedByValue = !isSortedByValue;
+			changeSortButton(btnSortByValue);
 		} else {
 			outputList.innerText = '';
 			createPairItems(pairsArray);
-			btnSortByValue.innerText = 'Sort by Value';
-			btnSortByValue.classList.remove('sorted');
-			isSortedByValue = !isSortedByValue;
+			changeSortButton(btnSortByValue);
 		}
 	}
 });
@@ -151,21 +186,17 @@ btnSortByValue.addEventListener('click', () => {
 
 // Подія для видалення усіх елементів
 btnDeleteAll.addEventListener('click', () => {
-	// функція спрацьовує лише якщо елементи є у списку
+	// функція спрацьовує лише якщо список не порожній
 	if (pairsArray.length) {
 		outputList.innerText = '';
 		pairsArray = [];
 
 		// повертаємо кнопки сортування в початкове значення, якщо вони були активні
 		if (isSortedByName) {
-			btnSortByName.innerText = 'Sort by Name';
-			btnSortByName.classList.remove('sorted');
-			isSortedByName = false;
+			changeSortButton(btnSortByName);
 		}
 		if (isSortedByValue) {
-			btnSortByValue.innerText = 'Sort by Value';
-			btnSortByValue.classList.remove('sorted');
-			isSortedByValue = false;
+			changeSortButton(btnSortByValue);
 		}
 	}
 });
