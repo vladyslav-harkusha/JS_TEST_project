@@ -64,7 +64,7 @@ body {
 .form .form__input-message {
     position: absolute;
     margin-top: 5px;
-    color: firebrick;
+    color: red;
     font-style: italic;
     display: none;
 }

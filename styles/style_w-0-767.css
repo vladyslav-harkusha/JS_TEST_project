@@ -38,7 +38,6 @@
         min-height: 50px;
         height: 160px;
         margin-bottom: 10px;
-        overflow-y: scroll;
     }
     .app__buttons-wrapper {
         flex-direction: column;

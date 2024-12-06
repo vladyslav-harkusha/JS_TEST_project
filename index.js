@@ -15,7 +15,7 @@ formInput.addEventListener('input', (event) => {
 
 	let targVal = event.target.value;
 	const currentSymbol = targVal[targVal.length - 1];
-	const regularExp = new RegExp(/[a-zA-Z0-9=]/g);
+	const regularExp = new RegExp(/[0-9a-zA-Zа-яА-ЯїЇіІєЄ=]/g);
 
 	// якщо користувач видаляє символи - записуємо нове значення в controlledInputValue
 	if (targVal.length < controlledInputValue.length) {
@@ -45,11 +45,11 @@ const createPairItems = (arr) => arr.forEach(elem => {
 	pairText.innerText = elem;
 	pairText.classList.add('app__list-item_text');
 
+	// Кнопка та функція для видалення одного елемента зі списку
 	const deleteItemBtn = document.createElement('button');
 	deleteItemBtn.innerText = 'Delete';
 	deleteItemBtn.classList.add('button--delete-item');
 
-	// Функція для видалення елемента зі списку
 	deleteItemBtn.addEventListener('click', () => {
 		const foundIndex = pairsArray.findIndex(pair => pair === elem);
 		pairsArray.splice(foundIndex, 1);
@@ -61,11 +61,12 @@ const createPairItems = (arr) => arr.forEach(elem => {
 });
 
 
-//Івент сабміту форми і додавання значень інпуту в масив
+// Івент сабміту форми і додавання значень інпуту в масив
 appForm.addEventListener('submit', (event) => {
 	event.preventDefault();
 
-	if (formInput.value && formInput.value.split('=')[1]) {
+	// перевіряємо чи користувач ввів value
+	if (formInput.value.split('=')[1]) {
 		outputList.innerText = '';
 		pairsArray.push(formInput.value);
 		createPairItems(pairsArray);
@@ -81,6 +82,8 @@ appForm.addEventListener('submit', (event) => {
 // Функція для сортування по Name або Value
 const sortPairs = (pairsArr, sortBy) => {
 	let sortedPairs;
+
+	// копіюємо поточний масив, щоб його не змінювати. сортуємо сплітнуті елементи масиву залежно від умови
 	if (sortBy === 'name') {
 		sortedPairs = [...pairsArr].sort((pair1, pair2) => pair1.split('=')[0].localeCompare(pair2.split('=')[0]));
 	}
@@ -89,15 +92,17 @@ const sortPairs = (pairsArr, sortBy) => {
 	}
 
 	outputList.innerText = '';
+	// передаємо відсортований масив у функцію виводу елементів
 	createPairItems(sortedPairs);
 }
 
 
-// Вішаємо події на кнопки сортування так, щоб вони працювали й у зворотному напрямку
+// Вішаємо події на кнопки сортування так, щоб вони при другому кліку повертали невідсортований масив
 let isSortedByName = false;
 let isSortedByValue = false;
 
 btnSortByName.addEventListener('click', () => {
+	// сортуємо лише якщо є мінімум 2 елементи списку
 	if (pairsArray.length > 1) {
 		if (isSortedByValue) {
 			isSortedByValue = !isSortedByValue;
@@ -146,10 +151,12 @@ btnSortByValue.addEventListener('click', () => {
 
 // Подія для видалення усіх елементів
 btnDeleteAll.addEventListener('click', () => {
+	// функція спрацьовує лише якщо елементи є у списку
 	if (pairsArray.length) {
 		outputList.innerText = '';
 		pairsArray = [];
 
+		// повертаємо кнопки сортування в початкове значення, якщо вони були активні
 		if (isSortedByName) {
 			btnSortByName.innerText = 'Sort by Name';
 			btnSortByName.classList.remove('sorted');
