@@ -127,6 +127,7 @@ function sortPairs(pairsArr, sortBy) {
 		sortedPairs = [...pairsArr].sort((pair1, pair2) => getValue(pair1).localeCompare(getValue(pair2)));
 	}
 
+	selectedPairsIds = [];
 	outputList.innerText = '';
 	// передаємо відсортований масив у функцію виводу елементів
 	createPairItems(sortedPairs);
