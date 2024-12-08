@@ -127,7 +127,6 @@ function sortPairs(pairsArr, sortBy) {
 		sortedPairs = [...pairsArr].sort((pair1, pair2) => getValue(pair1).localeCompare(getValue(pair2)));
 	}
 
-	selectedPairsIds = [];
 	outputList.innerText = '';
 	// передаємо відсортований масив у функцію виводу елементів
 	createPairItems(sortedPairs);
@@ -164,6 +163,8 @@ function changeSortButton(sortButton) {
 btnSortByName.addEventListener('click', () => {
 	// сортуємо лише якщо є мінімум 2 елементи у списку
 	if (pairsArray.length > 1) {
+		selectedPairsIds = [];
+
 		if (isSortedByValue) {
 			changeSortButton(btnSortByValue);
 		}
@@ -181,6 +182,8 @@ btnSortByName.addEventListener('click', () => {
 
 btnSortByValue.addEventListener('click', () => {
 	if (pairsArray.length > 1) {
+		selectedPairsIds = [];
+
 		if (isSortedByName) {
 			changeSortButton(btnSortByName);
 		}
