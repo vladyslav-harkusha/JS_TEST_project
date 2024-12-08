@@ -6,7 +6,7 @@ const btnSortByName = document.querySelector('.button--sort-by-name');
 const btnSortByValue = document.querySelector('.button--sort-by-value');
 const btnDeleteSelected = document.querySelector('.button--delete-selected');
 
-// Змінні для перемикання кнопок стану сортування
+// Змінні для перемикання стану кнопок сортування
 let isSortedByName = false;
 let isSortedByValue = false;
 
@@ -89,7 +89,7 @@ appForm.addEventListener('submit', (event) => {
 	if (formInput.value.split('=')[1]) {
 		outputList.innerText = '';
 
-		// створюэмо новий об'єкт та додаємо його в масив
+		// створюємо новий об'єкт та додаємо його в масив
 		const newPairObject = {
 			id: (new Date()).getTime(),
 			pairString: formInput.value
@@ -161,7 +161,7 @@ function changeSortButton(sortButton) {
 
 // Вішаємо події на кнопки сортування так, щоб вони при другому кліку повертали невідсортований масив
 btnSortByName.addEventListener('click', () => {
-	// сортуємо лише якщо є мінімум 2 елементи списку
+	// сортуємо лише якщо є мінімум 2 елементи у списку
 	if (pairsArray.length > 1) {
 		if (isSortedByValue) {
 			changeSortButton(btnSortByValue);
@@ -196,7 +196,7 @@ btnSortByValue.addEventListener('click', () => {
 });
 
 
-// Подія для фільтрування і видалення вибраних елементів
+// Подія для фільтрування і видалення обраних елементів
 btnDeleteSelected.addEventListener('click', () => {
 	// функція спрацьовує лише якщо масив обраних id не порожній
 	if (selectedPairsIds.length) {
