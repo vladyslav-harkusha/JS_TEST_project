@@ -15,10 +15,14 @@
     .app__list {
         height: 220px;
     }
+    .pair__checkBox {
+        width: 35px;
+        height: 35px;
+    }
     .app__buttons-wrapper {
         flex-direction: row;
     }
-    .button--delete-all {
+    .button--delete-selected {
         margin-top: 0;
     }
     button {

@@ -39,11 +39,15 @@
         height: 160px;
         margin-bottom: 10px;
     }
+    .pair__checkBox {
+        width: 30px;
+        height: 30px;
+    }
     .app__buttons-wrapper {
         flex-direction: column;
         margin-top: 20px;
     }
-    .button--delete-all {
+    .button--delete-selected {
         margin-top: 0;
     }
     button {

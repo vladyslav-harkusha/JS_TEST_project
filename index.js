@@ -4,7 +4,7 @@ const outputList = document.querySelector('.app__list');
 const errorMessage = document.querySelector('.form__input-message');
 const btnSortByName = document.querySelector('.button--sort-by-name');
 const btnSortByValue = document.querySelector('.button--sort-by-value');
-const btnDeleteAll = document.querySelector('.button--delete-all');
+const btnDeleteSelected = document.querySelector('.button--delete-selected');
 
 // Змінні для перемикання кнопок стану сортування
 let isSortedByName = false;
@@ -39,6 +39,7 @@ formInput.addEventListener('input', (event) => {
 
 // Функція для виводу елементів масиву
 let pairsArray = [];
+let selectedPairsIds = [];
 
 const createPairItems = (arr) => arr.forEach(elem => {
 	const pairItem = document.createElement('li');
@@ -46,35 +47,37 @@ const createPairItems = (arr) => arr.forEach(elem => {
 	pairItem.classList.add('app__list-item');
 
 	const pairText = document.createElement('p');
-	pairText.innerText = elem;
+	pairText.innerText = elem.pairString;
 	pairText.classList.add('app__list-item_text');
 
-	// Кнопка та функція для видалення одного елемента зі списку
-	const deleteItemBtn = document.createElement('button');
-	deleteItemBtn.innerText = 'Delete';
-	deleteItemBtn.classList.add('button--delete-item');
+	// додаємо чекбокс і лейбл до нього, вішаємо слухач події
+	const checkBoxLabel = document.createElement('label');
+	checkBoxLabel.setAttribute('for', `${elem.id}`);
+	checkBoxLabel.classList.add('pair__checkBox');
 
-	deleteItemBtn.addEventListener('click', () => {
-		// знаходимо індекс видаляємого елемента
-		const foundIndex = pairsArray.findIndex(pair => pair === elem);
-		// видаляємо елемент з масиву по знайденому індексу
-		pairsArray.splice(foundIndex, 1);
-		outputList.innerText = '';
+	const checkBox = document.createElement('input');
+	checkBox.type = 'checkbox';
+	checkBox.id = `${elem.id}`;
 
-		// якщо після видалення елемента масив не порожній - виводимо список
-		if (pairsArray.length) {
-			createPairItems(pairsArray);
-		}
-		// повертаємо кнопки сортування в початкове значення, якщо вони були активні
-		if (isSortedByName) {
-			changeSortButton(btnSortByName);
-		}
-		if (isSortedByValue) {
-			changeSortButton(btnSortByValue);
-		}
-	});
+	// ховаємо чекбокс, щоб було видно лише його лейбл
+	checkBox.style.display = 'none';
 
-	pairItem.append(pairText, deleteItemBtn);
+	checkBox.addEventListener('change', () => {
+		if (checkBox.checked) {
+			selectedPairsIds.push(elem.id);
+
+			checkBoxLabel.classList.add('pair__checkBox--checked');
+			pairItem.classList.add('app__list-item--checked');
+		} else {
+			selectedPairsIds = selectedPairsIds.filter(id => id !== elem.id);
+
+			checkBoxLabel.classList.remove('pair__checkBox--checked');
+			pairItem.classList.remove('app__list-item--checked');
+
+		}
+	})
+
+	pairItem.append(pairText, checkBoxLabel, checkBox);
 });
 
 
@@ -85,7 +88,13 @@ appForm.addEventListener('submit', (event) => {
 	// перевіряємо чи користувач ввів value
 	if (formInput.value.split('=')[1]) {
 		outputList.innerText = '';
-		pairsArray.push(formInput.value);
+
+		// створюэмо новий об'єкт та додаємо його в масив
+		const newPairObject = {
+			id: (new Date()).getTime(),
+			pairString: formInput.value
+		}
+		pairsArray.push(newPairObject);
 		createPairItems(pairsArray);
 
 		// якщо кнопки сортування активні - виводимо новий відсортований масив
@@ -107,12 +116,15 @@ appForm.addEventListener('submit', (event) => {
 // Функція для сортування по Name або Value
 function sortPairs(pairsArr, sortBy) {
 	let sortedPairs;
+	const getName = (pair) => pair.pairString.split('=')[0];
+	const getValue = (pair) => pair.pairString.split('=')[1];
+
 	// копіюємо поточний масив, щоб його не змінювати. сортуємо сплітнуті елементи масиву залежно від умови
 	if (sortBy === 'name') {
-		sortedPairs = [...pairsArr].sort((pair1, pair2) => pair1.split('=')[0].localeCompare(pair2.split('=')[0]));
+		sortedPairs = [...pairsArr].sort((pair1, pair2) => getName(pair1).localeCompare(getName(pair2)));
 	}
 	if (sortBy === 'value') {
-		sortedPairs = [...pairsArr].sort((pair1, pair2) => pair1.split('=')[1].localeCompare(pair2.split('=')[1]));
+		sortedPairs = [...pairsArr].sort((pair1, pair2) => getValue(pair1).localeCompare(getValue(pair2)));
 	}
 
 	outputList.innerText = '';
@@ -184,12 +196,15 @@ btnSortByValue.addEventListener('click', () => {
 });
 
 
-// Подія для видалення усіх елементів
-btnDeleteAll.addEventListener('click', () => {
-	// функція спрацьовує лише якщо список не порожній
-	if (pairsArray.length) {
+// Подія для фільтрування і видалення вибраних елементів
+btnDeleteSelected.addEventListener('click', () => {
+	// функція спрацьовує лише якщо масив обраних id не порожній
+	if (selectedPairsIds.length) {
 		outputList.innerText = '';
-		pairsArray = [];
+
+		pairsArray = pairsArray.filter(pair => !selectedPairsIds.includes(pair.id));
+		createPairItems(pairsArray);
+		selectedPairsIds = [];
 
 		// повертаємо кнопки сортування в початкове значення, якщо вони були активні
 		if (isSortedByName) {
